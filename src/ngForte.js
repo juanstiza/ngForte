@@ -1,6 +1,9 @@
 (function(){
     'use strict';
 
-    angular.module('ngForte',[]);
+    angular.module('ngForte',[
+        'ngForte.constants',
+        'ngForte.pitchClassCollection'
+    ]);
 
 }());

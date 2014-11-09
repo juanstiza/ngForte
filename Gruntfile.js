@@ -39,7 +39,7 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             dist: {
-                src: [ 'src/*.js', 'tmp/*.js' ],
+                src: [ 'src/**/*.js', 'tmp/*.js' ],
                 dest: 'dist/ngForte.js'
             }
         },
