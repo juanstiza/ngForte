@@ -35,4 +35,23 @@
 
     });
 
+    describe('ngForte pitchClass', function(){
+
+        beforeEach(module('ngForte'));
+
+        it('Should', inject(function(pitchClass, pitchClassCollectionFormats){
+
+            var aPC = pitchClass.withInt(0);
+
+            expect(aPC.intValue).toEqual(0);
+            expect(aPC.toString()).toEqual('0');
+
+            var otherPC = pitchClass.withIntAndFormat(0, pitchClassCollectionFormats.latin);
+
+            expect(otherPC.toString()).toEqual('do');
+
+        }));
+
+    });
+
 }());

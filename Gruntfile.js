@@ -60,7 +60,7 @@ module.exports = function(grunt) {
         watch: {
             dev: {
                 files: [ 'Gruntfile.js', 'src/*.js', '*.html' ],
-                tasks: [ 'jshint', 'karma:unit', 'html2js:dist', 'concat:dist', 'clean:temp' ],
+                tasks: [ 'jshint', 'karma:unit', 'concat:dist', 'clean:temp' ],
                 options: {
                     atBegin: true
                 }
@@ -101,6 +101,6 @@ module.exports = function(grunt) {
     grunt.registerTask('dev', [ 'bower', 'connect:server', 'watch:dev' ]);
     grunt.registerTask('test', [ 'bower', 'jshint', 'karma:continuous' ]);
     grunt.registerTask('minified', [ 'bower', 'connect:server', 'watch:min' ]);
-    grunt.registerTask('package', [ 'bower', 'jshint', 'karma:unit','concat:dist', 'uglify:dist',
-        'clean:temp' ]);
+    grunt.registerTask('package', [ 'bower', 'jshint', 'karma:unit','concat:dist', 'uglify:dist','clean:temp' ]);
+
 };
