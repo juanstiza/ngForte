@@ -58,6 +58,7 @@
         it('Should instantiate pitchClassSet Class', inject(function(pitchClassSet){
             var aPCSet = pitchClassSet.withArray([0,1,2,3]);
             expect(aPCSet.arrayValue).toEqual([0,1,2,3]);
+            expect(aPCSet.normalForm.toString()).toEqual('(0,1,2,3)');
         }));
 
     });

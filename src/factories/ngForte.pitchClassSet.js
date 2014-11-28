@@ -3,11 +3,21 @@
     'use strict';
 
     angular.module('ngForte.pitchClassSet',[])
-        .factory('pitchClassSet', ['pitchClass', function(pitchClass){
+        .factory('pitchClassSet',
+        ['pitchClass',
+            'pitchClassCollectionFormats',
+            'pitchClassCollectionTypes',
+            'pitchClassCollection',
+            function(pitchClass,
+                     pitchClassCollectionFormats,
+                     pitchClassCollectionTypes,
+                     pitchClassCollection){
 
             function PitchClassSet(anArray) {
                 this._ = {
-                    theSet : []
+                    theSet : [],
+                    pitchClassCollectionFormat: pitchClassCollectionFormats.numeric,
+                    pitchClassCollectionType: pitchClassCollectionTypes.primeForm
                 };
                 angular.forEach(anArray, function(value, index){
                     this.push(pitchClass.withInt(parseInt(value)));
@@ -21,6 +31,11 @@
                         this.push(value.intValue);
                     }, theResult);
                     return theResult;
+                },
+                get normalForm() {
+                    return pitchClassCollection.withArrayTypeAndFormat(this.arrayValue,
+                        this._.pitchClassCollectionType,
+                        this._.pitchClassCollectionFormat);
                 }
             };
 

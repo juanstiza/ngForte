@@ -41,8 +41,12 @@
              */
             function composeStringValue(aFormat, theCollectionFormat, myArray) {
                 var theFormat = aFormat;
-                if (myArray.length > theCollectionFormat.max) throw 'myArray.length must be lower than '+theCollectionFormat.max;
-                if (myArray.length < theCollectionFormat.min) throw 'myArray.length must be higher than '+theCollectionFormat.min;
+                if (myArray.length > theCollectionFormat.max) {
+                    throw 'myArray.length must be lower than '+theCollectionFormat.max;
+                }
+                if (myArray.length < theCollectionFormat.min) {
+                    throw 'myArray.length must be higher than '+theCollectionFormat.min;
+                }
                 var theArray = [];
                 angular.forEach(myArray,function(element, index){
                     this.push(theFormat[element]);
@@ -59,6 +63,10 @@
              */
             PitchClassCollection.withArrayAndType = function(anArray, PitchClassCollectionType) {
                 return new PitchClassCollection(anArray, PitchClassCollectionType);
+            };
+
+            PitchClassCollection.withArrayTypeAndFormat = function(anArray, PitchClassCollectionType, aFormat) {
+                return new PitchClassCollection(anArray, PitchClassCollectionType, aFormat);
             };
 
             return PitchClassCollection;
