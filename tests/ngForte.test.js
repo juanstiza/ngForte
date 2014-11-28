@@ -10,13 +10,13 @@
             var collection = pitchClassCollection.withArrayAndType([0,1,2,3], pitchClassCollectionTypes.primeForm);
             expect(collection.toString()).toEqual('(0,1,2,3)');
 
-            var collection = pitchClassCollection.withArrayAndType([0,1,2,3], pitchClassCollectionTypes.inversedForm);
+            collection = pitchClassCollection.withArrayAndType([0,1,2,3], pitchClassCollectionTypes.inversedForm);
             expect(collection.toString()).toEqual('[0,1,2,3]');
 
-            var collection = pitchClassCollection.withArrayAndType([0,1,2,3], pitchClassCollectionTypes.normalForm);
+            collection = pitchClassCollection.withArrayAndType([0,1,2,3], pitchClassCollectionTypes.normalForm);
             expect(collection.toString()).toEqual('0,1,2,3');
 
-            var collection = pitchClassCollection.withArrayAndType([1,1,2,2,3,3], pitchClassCollectionTypes.intervalVector);
+            collection = pitchClassCollection.withArrayAndType([1,1,2,2,3,3], pitchClassCollectionTypes.intervalVector);
             expect(collection.toString()).toEqual('<112233>');
 
             expect(function(pitchClassCollection){
@@ -39,17 +39,25 @@
 
         beforeEach(module('ngForte'));
 
-        it('Should', inject(function(pitchClass, pitchClassCollectionFormats){
+        it('Should instantiate pitchClass Class', inject(function(pitchClass, pitchClassCollectionFormats){
 
             var aPC = pitchClass.withInt(0);
 
             expect(aPC.intValue).toEqual(0);
-            expect(aPC.toString()).toEqual('0');
+            expect(aPC.stringValue(pitchClassCollectionFormats.numeric)).toEqual('0');
+            expect(aPC.stringValue(pitchClassCollectionFormats.latin)).toEqual('do');
 
-            var otherPC = pitchClass.withIntAndFormat(0, pitchClassCollectionFormats.latin);
+        }));
 
-            expect(otherPC.toString()).toEqual('do');
+    });
 
+    describe('ngForte pitchClassSet', function(){
+
+        beforeEach(module('ngForte'));
+
+        it('Should instantiate pitchClassSet Class', inject(function(pitchClassSet){
+            var aPCSet = pitchClassSet.withArray([0,1,2,3]);
+            expect(aPCSet.arrayValue).toEqual([0,1,2,3]);
         }));
 
     });
