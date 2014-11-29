@@ -35,6 +35,33 @@
                 return new PitchClass(anInt, pitchClassCollectionFormats.numeric);
             };
 
+            PitchClass.prototype.transpose = function(transposition) {
+                var newInt = normalize(this._.intValue + transposition);
+                return PitchClass.withInt(newInt);
+            };
+
+            PitchClass.prototype.invert = function() {
+                return PitchClass.withInt(invert(this._.intValue));
+            };
+
+            /**
+             * Normalize a set (AKA modulo 12)
+             * @param anInt
+             * @returns {number}
+             */
+            function normalize(anInt) {
+                return ((anInt % 12) + 12) % 12;
+            }
+
+            /**
+             * Set inversion
+             * @param int
+             * @returns {number}
+             */
+            function invert(int) {
+                return normalize(12 - normalize(int));
+            }
+
             return PitchClass;
 
         });

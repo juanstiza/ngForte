@@ -47,6 +47,16 @@
             expect(aPC.stringValue(pitchClassCollectionFormats.numeric)).toEqual('0');
             expect(aPC.stringValue(pitchClassCollectionFormats.latin)).toEqual('do');
 
+            expect(aPC.transpose(1).intValue).toEqual(1);
+            expect(aPC.transpose(-1).intValue).toEqual(11);
+            expect(aPC.transpose(13).intValue).toEqual(1);
+
+            var newPC = pitchClass.withInt(7);
+            expect(newPC.invert().intValue).toEqual(5);
+
+            var newPC = pitchClass.withInt(13);
+            expect(newPC.invert().intValue).toEqual(11);
+
         }));
 
     });
@@ -55,10 +65,36 @@
 
         beforeEach(module('ngForte'));
 
+        //TODO: separate tests by action.
         it('Should instantiate pitchClassSet Class', inject(function(pitchClassSet){
             var aPCSet = pitchClassSet.withArray([0,1,2,3]);
+            // Array value
             expect(aPCSet.arrayValue).toEqual([0,1,2,3]);
+            // Cardinal
+            expect(aPCSet.cardinal).toEqual(4);
+            // Transposition
+            expect(aPCSet.transpose(5).arrayValue).toEqual([5,6,7,8]);
+            expect(aPCSet.transpose(5).normalize().arrayValue).toEqual([0,1,2,3]);
+            // Inversion
+            expect(aPCSet.invert().arrayValue).toEqual([0, 11, 10, 9]);
+            // Inversion + transposition
+            expect(
+                pitchClassSet.withArray([2,3,4]).
+                    invert().
+                    arrayValue
+            ).toEqual([10,9,8]);
+            expect(
+                pitchClassSet.withArray([2,3,4]).
+                    invert().
+                    transpose(-8).
+                    arrayValue
+            ).toEqual([2,1,0]);
+            // String representation
             expect(aPCSet.normalForm.toString()).toEqual('(0,1,2,3)');
+
+            var otherPCSet = pitchClassSet.withArray([0,1,7,11]);
+            console.log(otherPCSet.primeForm.toString());
+
         }));
 
     });
