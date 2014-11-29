@@ -46,7 +46,10 @@
                         this._.pitchClassCollectionFormat);
                 },
                 get primeForm() {
-                    return getPrimeForm(this);
+                    return getPrimeForm(this).primeForm;
+                },
+                get inversedForm() {
+                    return getPrimeForm(this).inversedForm;
                 },
                 get cardinal() {
                     return this._.theSet.length;
@@ -72,19 +75,26 @@
                 var originalHash = getSmallest(aPitchClassSet);
                 var invertedHash = getSmallest(aPitchClassSet.invert());
                 var setData = pitchClassSetData[aPitchClassSet.arrayValue.length];
+                var result = {
+                    forteCode: "",
+                    primeForm: {},
+                    inversedForm: {},
+                };
                 var forteCode = "";
                 var primeForm = [];
                 angular.forEach(setData, function(value, index){
                     if (angular.toJson(value) === angular.toJson(originalHash)) {
-                        forteCode = index;
-                        primeForm = value;
+                        result.primeForm = pitchClassCollection.withArrayTypeAndFormat(value, pitchClassCollectionTypes.primeForm, pitchClassCollectionFormats.numeric);
+                        result.forteCode = index;
+                        result.inversedForm = pitchClassCollection.withArrayTypeAndFormat(invertedHash, pitchClassCollectionTypes.inversedForm, pitchClassCollectionFormats.numeric);;
                     }
                     if (angular.toJson(value) === angular.toJson(invertedHash)) {
-                        forteCode = index;
-                        primeForm = value;
+                        result.primeForm = pitchClassCollection.withArrayTypeAndFormat(value, pitchClassCollectionTypes.primeForm, pitchClassCollectionFormats.numeric);
+                        result.forteCode = index;
+                        result.inversedForm = pitchClassCollection.withArrayTypeAndFormat(originalHash, pitchClassCollectionTypes.inversedForm, pitchClassCollectionFormats.numeric);;
                     }
                 });
-                return pitchClassCollection.withArrayTypeAndFormat(primeForm, pitchClassCollectionTypes.primeForm, pitchClassCollectionFormats.numeric);
+                return result;
             }
 
             PitchClassSet.prototype.transpose = function(transposition) {
