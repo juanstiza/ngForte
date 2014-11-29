@@ -86,12 +86,12 @@
                     if (angular.toJson(value) === angular.toJson(originalHash)) {
                         result.primeForm = pitchClassCollection.withArrayTypeAndFormat(value, pitchClassCollectionTypes.primeForm, pitchClassCollectionFormats.numeric);
                         result.forteCode = index;
-                        result.inversedForm = pitchClassCollection.withArrayTypeAndFormat(invertedHash, pitchClassCollectionTypes.inversedForm, pitchClassCollectionFormats.numeric);;
+                        result.inversedForm = pitchClassCollection.withArrayTypeAndFormat(invertedHash, pitchClassCollectionTypes.inversedForm, pitchClassCollectionFormats.numeric);
                     }
                     if (angular.toJson(value) === angular.toJson(invertedHash)) {
                         result.primeForm = pitchClassCollection.withArrayTypeAndFormat(value, pitchClassCollectionTypes.primeForm, pitchClassCollectionFormats.numeric);
                         result.forteCode = index;
-                        result.inversedForm = pitchClassCollection.withArrayTypeAndFormat(originalHash, pitchClassCollectionTypes.inversedForm, pitchClassCollectionFormats.numeric);;
+                        result.inversedForm = pitchClassCollection.withArrayTypeAndFormat(originalHash, pitchClassCollectionTypes.inversedForm, pitchClassCollectionFormats.numeric);
                     }
                 });
                 return result;
