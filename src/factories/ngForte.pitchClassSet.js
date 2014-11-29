@@ -67,6 +67,7 @@
                 return ordered[0].value.arrayValue;
             }
 
+            //TODO: find also inverted form, if it exists (should be either original or inverted).
             function getPrimeForm(aPitchClassSet) {
                 var originalHash = getSmallest(aPitchClassSet);
                 var invertedHash = getSmallest(aPitchClassSet.invert());
@@ -108,10 +109,6 @@
                 }, newSet);
                 return PitchClassSet.withSet(newSet);
             };
-
-            function getDistance(aPitchClassSet) {
-                return aPitchClassSet.arrayValue[aPitchClassSet.cardinal - 1] - aPitchClassSet.arrayValue[0];
-            }
 
             PitchClassSet.prototype.sd = function() {
                 var mean = this.mean();

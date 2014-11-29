@@ -93,7 +93,7 @@
             expect(aPCSet.normalForm.toString()).toEqual('(0,1,2,3)');
 
             var otherPCSet = pitchClassSet.withArray([0,1,7,11]);
-            console.log(otherPCSet.primeForm.toString());
+            expect(otherPCSet.primeForm.toArray()).toEqual([0,1,2,6]);
 
         }));
 

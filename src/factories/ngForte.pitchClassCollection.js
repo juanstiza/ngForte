@@ -29,6 +29,9 @@
             PitchClassCollection.prototype = {
                 toString: function() {
                     return composeStringValue(this._.pitchFormat, this._.collectionType, this._.arrayValue);
+                },
+                toArray: function() {
+                    return this._.arrayValue;
                 }
             };
 
