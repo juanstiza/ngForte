@@ -92,6 +92,8 @@
             // String representation
             expect(aPCSet.normalForm.toString()).toEqual('(0,1,2,3)');
 
+            expect(pitchClassSet.withArray([5,2,4,1]).iv().toString()).toEqual('<212100>');
+
             var otherPCSet = pitchClassSet.withArray([0,1,7,11]);
             expect(otherPCSet.primeForm.toArray()).toEqual([0,1,2,6]);
             expect(otherPCSet.inversedForm.toArray()).toEqual([0,1,2,8]);
