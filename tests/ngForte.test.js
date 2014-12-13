@@ -10,7 +10,7 @@
             var collection = pitchClassCollection.withArrayAndType([0,1,2,3], pitchClassCollectionTypes.primeForm);
             expect(collection.toString()).toEqual('(0,1,2,3)');
 
-            collection = pitchClassCollection.withArrayAndType([0,1,2,3], pitchClassCollectionTypes.inversedForm);
+            collection = pitchClassCollection.withArrayAndType([0,1,2,3], pitchClassCollectionTypes.primeInversion);
             expect(collection.toString()).toEqual('[0,1,2,3]');
 
             collection = pitchClassCollection.withArrayAndType([0,1,2,3], pitchClassCollectionTypes.normalForm);
@@ -96,7 +96,7 @@
 
             var otherPCSet = pitchClassSet.withArray([0,1,7,11]);
             expect(otherPCSet.primeForm.toArray()).toEqual([0,1,2,6]);
-            expect(otherPCSet.inversedForm.toArray()).toEqual([0,1,2,8]);
+            expect(otherPCSet.primeInversion.toArray()).toEqual([0,1,2,8]);
 
         }));
 

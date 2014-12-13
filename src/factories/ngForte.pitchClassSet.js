@@ -48,11 +48,17 @@
                 get primeForm() {
                     return getPrimeForm(this).primeForm;
                 },
-                get inversedForm() {
-                    return getPrimeForm(this).inversedForm;
+                get primeInversion() {
+                    return getPrimeForm(this).primeInversion;
                 },
                 get cardinal() {
                     return this._.theSet.length;
+                },
+                get hash() {
+                    return {
+                        value: hashValue(this.arrayValue),
+                        map: hashMap(this.arrayValue)
+                    };
                 }
             };
 
@@ -78,7 +84,7 @@
                 var result = {
                     forteCode: "",
                     primeForm: {},
-                    inversedForm: {},
+                    primeInversion: {},
                 };
                 var forteCode = "";
                 var primeForm = [];
@@ -86,12 +92,12 @@
                     if (angular.toJson(value) === angular.toJson(originalHash)) {
                         result.primeForm = pitchClassCollection.withArrayTypeAndFormat(value, pitchClassCollectionTypes.primeForm, pitchClassCollectionFormats.numeric);
                         result.forteCode = index;
-                        result.inversedForm = pitchClassCollection.withArrayTypeAndFormat(invertedHash, pitchClassCollectionTypes.inversedForm, pitchClassCollectionFormats.numeric);
+                        result.primeInversion = pitchClassCollection.withArrayTypeAndFormat(invertedHash, pitchClassCollectionTypes.primeInversion, pitchClassCollectionFormats.numeric);
                     }
                     if (angular.toJson(value) === angular.toJson(invertedHash)) {
                         result.primeForm = pitchClassCollection.withArrayTypeAndFormat(value, pitchClassCollectionTypes.primeForm, pitchClassCollectionFormats.numeric);
                         result.forteCode = index;
-                        result.inversedForm = pitchClassCollection.withArrayTypeAndFormat(originalHash, pitchClassCollectionTypes.inversedForm, pitchClassCollectionFormats.numeric);
+                        result.primeInversion = pitchClassCollection.withArrayTypeAndFormat(originalHash, pitchClassCollectionTypes.primeInversion, pitchClassCollectionFormats.numeric);
                     }
                 });
                 return result;
@@ -142,15 +148,20 @@
                 return mean/this.arrayValue.length;
             };
 
-            PitchClassSet.prototype.hashValue = function() {
-                var hashValue = [];
-                for (var i = 11; i > 0; i--) {
-                    if (this.arrayValue.indexOf(i) != -1) {
-                        hashValue[i] = 1;
-                    } else hashValue[i] = 0;
+            function hashValue(anArray) {
+                var value = hashMap(anArray);
+                return parseInt(value.join(''), 2);
+            }
+
+            function hashMap(anArray) {
+                var value = [];
+                for (var i = 0; i < 12; i++) {
+                    if (anArray.indexOf(i) != -1) {
+                        value[i] = 1;
+                    } else value[i] = 0;
                 }
-                return parseInt(hashValue.join(''), 2);
-            };
+                return value;
+            }
 
             /**
              * Interval Vector

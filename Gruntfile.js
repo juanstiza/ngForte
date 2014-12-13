@@ -28,12 +28,6 @@ module.exports = function(grunt) {
             }
         },
 
-        clean: {
-            temp: {
-                src: [ 'tmp' ]
-            }
-        },
-
         concat: {
             options: {
                 separator: ';'
@@ -48,26 +42,10 @@ module.exports = function(grunt) {
             all: [ 'Gruntfile.js', 'src/*.js', 'src/**/*.js' ]
         },
 
-        connect: {
-            server: {
-                options: {
-                    hostname: 'localhost',
-                    port: 8080
-                }
-            }
-        },
-
         watch: {
             dev: {
                 files: [ 'Gruntfile.js', 'src/*.js'],
-                tasks: [ 'jshint', 'karma:unit', 'concat:dist', 'clean:temp' ],
-                options: {
-                    atBegin: true
-                }
-            },
-            min: {
-                files: [ 'Gruntfile.js', 'src/*.js', '*.html' ],
-                tasks: [ 'jshint', 'karma:unit', 'html2js:dist', 'concat:dist', 'clean:temp', 'uglify:dist' ],
+                tasks: [ 'jshint', 'karma:continuous', 'concat:dist'],
                 options: {
                     atBegin: true
                 }
@@ -81,7 +59,6 @@ module.exports = function(grunt) {
             unit: {
                 singleRun: true
             },
-
             continuous: {
                 singleRun: false,
                 autoWatch: true
@@ -90,15 +67,13 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-karma');
 
-    grunt.registerTask('dev', [ 'bower', 'jshint', 'karma:continuous' ]);
-    grunt.registerTask('build', [ 'bower', 'jshint', 'karma:unit','concat:dist', 'uglify:dist','clean:temp' ]);
+    grunt.registerTask('dev', [ 'bower', 'jshint', 'watch:dev' ]);
+    grunt.registerTask('build', [ 'bower', 'jshint', 'karma:unit','concat:dist', 'uglify:dist']);
 
 };

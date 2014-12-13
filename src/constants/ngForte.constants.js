@@ -75,7 +75,7 @@
                 max: 6,
                 min: 6
             },
-            inversedForm: {
+            primeInversion: {
                 open: '[',
                 close: ']',
                 separator: ',',
