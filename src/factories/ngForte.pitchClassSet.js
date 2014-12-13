@@ -142,6 +142,51 @@
                 return mean/this.arrayValue.length;
             };
 
+            PitchClassSet.prototype.hashValue = function() {
+                var hashValue = [];
+                for (var i = 11; i > 0; i--) {
+                    if (this.arrayValue.indexOf(i) != -1) {
+                        hashValue[i] = 1;
+                    } else hashValue[i] = 0;
+                }
+                return parseInt(hashValue.join(''), 2);
+            };
+
+            /**
+             * Interval Vector
+             * @returns {*}
+             */
+            PitchClassSet.prototype.iv = function() {
+                var setHashMap = {};
+                var set = this._.theSet;
+                angular.forEach(set, function(a) {
+                    angular.forEach(set, function(b){
+                        if (a.intValue != b.intValue) {
+                            var hash = ((a.intValue + b.intValue + 1) / ((a.intValue * b.intValue) + 1)).toString();
+                            setHashMap[hash] = [a.intValue, b.intValue];
+                        }
+                    });
+                });
+                var diffSet = [];
+                angular.forEach(setHashMap, function(value){
+                    diffSet.push(Math.abs(value[0] - value[1]));
+                });
+                var countSet = {};
+                for (var i = 1; i < 7; i++) {
+                    countSet[i] = 0;
+                }
+                angular.forEach(diffSet, function(value){
+                    countSet[value%6] += 1;
+                });
+                var intervalVector = [];
+                angular.forEach(countSet, function(value) {
+                    this.push(value);
+                }, intervalVector);
+                return pitchClassCollection.withArrayTypeAndFormat(intervalVector,
+                    pitchClassCollectionTypes.intervalVector,
+                    pitchClassCollectionFormats.numeric);
+            };
+
             PitchClassSet.withArray = function(anArray) {
                 return new PitchClassSet(anArray);
             };
