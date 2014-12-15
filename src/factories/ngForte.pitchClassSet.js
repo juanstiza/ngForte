@@ -54,6 +54,9 @@
                 get cardinal() {
                     return this._.theSet.length;
                 },
+                get forteCode() {
+                    return getPrimeForm(this).forteCode;
+                },
                 get hash() {
                     return {
                         value: hashValue(this.arrayValue),
@@ -204,6 +207,14 @@
 
             PitchClassSet.withSet = function(aSet) {
                 return new PitchClassSet(aSet, true);
+            };
+
+            PitchClassSet.withMap = function(aMap) {
+                var set = [];
+                angular.forEach(aMap, function(value, index){
+                    if (value == 1) set.push(index);
+                });
+                return new PitchClassSet(set);
             };
 
             return PitchClassSet;
