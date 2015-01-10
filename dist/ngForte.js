@@ -515,11 +515,17 @@
                 get cardinal() {
                     return this._.theSet.length;
                 },
+                get forteCode() {
+                    return getPrimeForm(this).forteCode;
+                },
                 get hash() {
                     return {
                         value: hashValue(this.arrayValue),
                         map: hashMap(this.arrayValue)
                     };
+                },
+                get iv() {
+                    return getIv(this._.theSet);
                 }
             };
 
@@ -628,11 +634,10 @@
              * Interval Vector
              * @returns {*}
              */
-            PitchClassSet.prototype.iv = function() {
+            function getIv(aSet) {
                 var setHashMap = {};
-                var set = this._.theSet;
-                angular.forEach(set, function(a) {
-                    angular.forEach(set, function(b){
+                angular.forEach(aSet, function(a) {
+                    angular.forEach(aSet, function(b){
                         if (a.intValue != b.intValue) {
                             var hash = ((a.intValue + b.intValue + 1) / ((a.intValue * b.intValue) + 1)).toString();
                             setHashMap[hash] = [a.intValue, b.intValue];
@@ -657,7 +662,7 @@
                 return pitchClassCollection.withArrayTypeAndFormat(intervalVector,
                     pitchClassCollectionTypes.intervalVector,
                     pitchClassCollectionFormats.numeric);
-            };
+            }
 
             PitchClassSet.withArray = function(anArray) {
                 return new PitchClassSet(anArray);
@@ -665,6 +670,14 @@
 
             PitchClassSet.withSet = function(aSet) {
                 return new PitchClassSet(aSet, true);
+            };
+
+            PitchClassSet.withMap = function(aMap) {
+                var set = [];
+                angular.forEach(aMap, function(value, index){
+                    if (value == 1) set.push(index);
+                });
+                return new PitchClassSet(set);
             };
 
             return PitchClassSet;
