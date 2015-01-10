@@ -1,6 +1,6 @@
 {
   "name": "ngForte",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "dist/ngForte.js",
   "authors": [
     "Juan Stiza", "Juan Stiza <juanstiza@gmail.com>"

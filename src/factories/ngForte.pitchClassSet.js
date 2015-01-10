@@ -70,14 +70,14 @@
 
             function getSmallest(aPitchClassSet) {
                 var multi = [];
-                angular.forEach(aPitchClassSet.arrayValue, function(value, index) {
+                angular.forEach(aPitchClassSet._.theSet, function(aPitchClass, index) {
                     this.push({
-                        sd:aPitchClassSet.copy().transpose(value).normalize().sd(),
-                        string:aPitchClassSet.copy().transpose(value).normalize().normalForm.toString(),
-                        value:aPitchClassSet.copy().transpose(value).normalize()
+                        sd:aPitchClassSet.copy().transpose(aPitchClass.intValue).normalize().sd(),
+                        string:aPitchClassSet.copy().transpose(aPitchClass.intValue).normalize().normalForm.toString(),
+                        value:aPitchClassSet.copy().transpose(aPitchClass.intValue).normalize()
                     });
                 }, multi);
-                var filter = $filter('orderBy');
+                var filter = $filter('orderBy', true);
                 var ordered = filter(multi, 'sd');
                 return ordered[0].value.arrayValue;
             }
@@ -108,26 +108,26 @@
             }
 
             PitchClassSet.prototype.transpose = function(transposition) {
-                var newSet = [];
-                angular.forEach(this._.theSet, function(value, index){
-                    this.push(value.transpose(transposition));
-                }, newSet);
-                return PitchClassSet.withSet(newSet);
+                angular.forEach(this._.theSet, function(aPitchClass, index){
+                  aPitchClass.transpose(transposition);
+                });
+                return this;
             };
 
             PitchClassSet.prototype.normalize = function() {
                 var filter = $filter('orderBy');
                 var newSet = filter(this._.theSet, 'intValue');
                 var index = newSet[0].intValue;
-                return PitchClassSet.withSet(newSet).transpose(-index);
+                this._.theSet = newSet;
+                this.transpose(-index);
+                return this;
             };
 
             PitchClassSet.prototype.invert = function() {
-                var newSet = [];
-                angular.forEach(this._.theSet, function(value){
-                    this.push(value.invert());
-                }, newSet);
-                return PitchClassSet.withSet(newSet);
+                angular.forEach(this._.theSet, function(aPitchClass){
+                    aPitchClass.invert();
+                });
+                return this;
             };
 
             PitchClassSet.prototype.sd = function() {
@@ -154,7 +154,7 @@
 
             PitchClassSet.prototype.copy = function() {
                 return PitchClassSet.withSet(this._.theSet);
-            }
+            };
 
             function hashValue(anArray) {
                 var value = hashMap(anArray);

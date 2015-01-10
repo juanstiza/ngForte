@@ -166,7 +166,7 @@
 
           var aPCSet = PitchClassSet.withArray([0,1,7,11]);
           expect(aPCSet.primeForm.toArray()).toEqual([0,1,2,6]);
-          expect(aPCSet.primeInversion.toArray()).toEqual([0,1,2,8]);
+          expect(aPCSet.primeInversion.toArray()).toEqual([0,4,5,6]);
 
         }));
 

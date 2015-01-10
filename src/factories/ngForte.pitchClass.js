@@ -36,12 +36,13 @@
             };
 
             PitchClass.prototype.transpose = function(transposition) {
-                var newInt = normalize(this._.intValue + transposition);
-                return PitchClass.withInt(newInt);
+                this._.intValue = normalize(this._.intValue + transposition);
+                return this;
             };
 
             PitchClass.prototype.invert = function() {
-                return PitchClass.withInt(invert(this._.intValue));
+                this._.intValue = invert(this._.intValue);
+                return this;
             };
 
             /**

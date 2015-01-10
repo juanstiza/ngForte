@@ -6,17 +6,6 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
 
-        bower: {
-            install: {
-                options: {
-                    install: true,
-                    copy: true,
-                    targetDir: './libs',
-                    cleanTargetDir: true
-                }
-            }
-        },
-
         uglify: {
             dist: {
                 files: {
@@ -70,10 +59,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-karma');
 
-    grunt.registerTask('dev', [ 'bower', 'jshint', 'watch:dev' ]);
-    grunt.registerTask('build', [ 'bower', 'jshint', 'karma:unit','concat:dist', 'uglify:dist']);
+    grunt.registerTask('dev', [ 'jshint', 'watch:dev' ]);
+    grunt.registerTask('build', [ 'jshint', 'karma:unit','concat:dist', 'uglify:dist']);
 
 };

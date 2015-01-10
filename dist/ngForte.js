@@ -352,12 +352,13 @@
             };
 
             PitchClass.prototype.transpose = function(transposition) {
-                var newInt = normalize(this._.intValue + transposition);
-                return PitchClass.withInt(newInt);
+                this._.intValue = normalize(this._.intValue + transposition);
+                return this;
             };
 
             PitchClass.prototype.invert = function() {
-                return PitchClass.withInt(invert(this._.intValue));
+                this._.intValue = invert(this._.intValue);
+                return this;
             };
 
             /**
@@ -534,30 +535,28 @@
 
             function getSmallest(aPitchClassSet) {
                 var multi = [];
-                angular.forEach(aPitchClassSet.arrayValue, function(value, index) {
-                    multi.push({
-                        sd:aPitchClassSet.transpose(value).normalize().sd(),
-                        string:aPitchClassSet.transpose(value).normalize().normalForm.toString(),
-                        value:aPitchClassSet.transpose(value).normalize()
+                angular.forEach(aPitchClassSet._.theSet, function(aPitchClass, index) {
+                    this.push({
+                        sd:aPitchClassSet.copy().transpose(aPitchClass.intValue).normalize().sd(),
+                        string:aPitchClassSet.copy().transpose(aPitchClass.intValue).normalize().normalForm.toString(),
+                        value:aPitchClassSet.copy().transpose(aPitchClass.intValue).normalize()
                     });
                 }, multi);
-                var filter = $filter('orderBy');
+                var filter = $filter('orderBy', true);
                 var ordered = filter(multi, 'sd');
                 return ordered[0].value.arrayValue;
             }
 
             //TODO: find also inverted form, if it exists (should be either original or inverted).
             function getPrimeForm(aPitchClassSet) {
-                var originalHash = getSmallest(aPitchClassSet);
-                var invertedHash = getSmallest(aPitchClassSet.invert());
+                var originalHash = getSmallest(aPitchClassSet.copy());
+                var invertedHash = getSmallest(aPitchClassSet.copy().invert());
                 var setData = PitchClassSetData[aPitchClassSet.arrayValue.length];
                 var result = {
                     forteCode: "",
                     primeForm: {},
                     primeInversion: {},
                 };
-                var forteCode = "";
-                var primeForm = [];
                 angular.forEach(setData, function(value, index){
                     if (angular.toJson(value) === angular.toJson(originalHash)) {
                         result.primeForm = PitchClassCollection.withArrayTypeAndFormat(value, PitchClassCollectionTypes.primeForm, PitchClassCollectionFormats.numeric);
@@ -574,26 +573,26 @@
             }
 
             PitchClassSet.prototype.transpose = function(transposition) {
-                var newSet = [];
-                angular.forEach(this._.theSet, function(value, index){
-                    this.push(value.transpose(transposition));
-                }, newSet);
-                return PitchClassSet.withSet(newSet);
+                angular.forEach(this._.theSet, function(aPitchClass, index){
+                  aPitchClass.transpose(transposition);
+                });
+                return this;
             };
 
             PitchClassSet.prototype.normalize = function() {
                 var filter = $filter('orderBy');
                 var newSet = filter(this._.theSet, 'intValue');
                 var index = newSet[0].intValue;
-                return PitchClassSet.withSet(newSet).transpose(-index);
+                this._.theSet = newSet;
+                this.transpose(-index);
+                return this;
             };
 
             PitchClassSet.prototype.invert = function() {
-                var newSet = [];
-                angular.forEach(this._.theSet, function(value){
-                    this.push(value.invert());
-                }, newSet);
-                return PitchClassSet.withSet(newSet);
+                angular.forEach(this._.theSet, function(aPitchClass){
+                    aPitchClass.invert();
+                });
+                return this;
             };
 
             PitchClassSet.prototype.sd = function() {
@@ -616,6 +615,10 @@
                     mean += value;
                 }, mean);
                 return mean/this.arrayValue.length;
+            };
+
+            PitchClassSet.prototype.copy = function() {
+                return PitchClassSet.withSet(this._.theSet);
             };
 
             function hashValue(anArray) {
