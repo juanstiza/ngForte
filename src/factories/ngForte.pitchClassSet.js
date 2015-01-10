@@ -71,10 +71,10 @@
             function getSmallest(aPitchClassSet) {
                 var multi = [];
                 angular.forEach(aPitchClassSet.arrayValue, function(value, index) {
-                    multi.push({
-                        sd:aPitchClassSet.transpose(value).normalize().sd(),
-                        string:aPitchClassSet.transpose(value).normalize().normalForm.toString(),
-                        value:aPitchClassSet.transpose(value).normalize()
+                    this.push({
+                        sd:aPitchClassSet.copy().transpose(value).normalize().sd(),
+                        string:aPitchClassSet.copy().transpose(value).normalize().normalForm.toString(),
+                        value:aPitchClassSet.copy().transpose(value).normalize()
                     });
                 }, multi);
                 var filter = $filter('orderBy');
@@ -84,16 +84,14 @@
 
             //TODO: find also inverted form, if it exists (should be either original or inverted).
             function getPrimeForm(aPitchClassSet) {
-                var originalHash = getSmallest(aPitchClassSet);
-                var invertedHash = getSmallest(aPitchClassSet.invert());
+                var originalHash = getSmallest(aPitchClassSet.copy());
+                var invertedHash = getSmallest(aPitchClassSet.copy().invert());
                 var setData = PitchClassSetData[aPitchClassSet.arrayValue.length];
                 var result = {
                     forteCode: "",
                     primeForm: {},
                     primeInversion: {},
                 };
-                var forteCode = "";
-                var primeForm = [];
                 angular.forEach(setData, function(value, index){
                     if (angular.toJson(value) === angular.toJson(originalHash)) {
                         result.primeForm = PitchClassCollection.withArrayTypeAndFormat(value, PitchClassCollectionTypes.primeForm, PitchClassCollectionFormats.numeric);
@@ -153,6 +151,10 @@
                 }, mean);
                 return mean/this.arrayValue.length;
             };
+
+            PitchClassSet.prototype.copy = function() {
+                return PitchClassSet.withSet(this._.theSet);
+            }
 
             function hashValue(anArray) {
                 var value = hashMap(anArray);
