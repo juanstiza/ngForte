@@ -74,18 +74,18 @@
         it('Should instantiate PitchClass Class',
           inject(function(PitchClass, PitchClassCollectionFormats){
 
-            var aPC = PitchClass.withInt(0);
-            expect(aPC.intValue).toEqual(0);
+            expect(PitchClass.withInt(0).intValue).toEqual(0);
 
         }));
 
         it('Should transpose a PitchClass',
           inject(function(PitchClass, PitchClassCollectionFormats){
 
-          var aPC = PitchClass.withInt(0);
-          expect(aPC.transpose(1).intValue).toEqual(1);
-          expect(aPC.transpose(-1).intValue).toEqual(11);
-          expect(aPC.transpose(13).intValue).toEqual(1);
+          expect(PitchClass.withInt(0).transpose(1).intValue).toEqual(1);
+          expect(PitchClass.withInt(0).transpose(-1).intValue).toEqual(11);
+          expect(PitchClass.withInt(0).transpose(13).intValue).toEqual(1);
+
+          expect(PitchClass.withInt(0).transpose(5).transpose(-3).intValue).toEqual(2);
 
         }));
 
@@ -101,11 +101,11 @@
         it('Should invert a PitchClass',
           inject(function(PitchClass, PitchClassCollectionFormats){
 
-          var aPC = PitchClass.withInt(7);
-          expect(aPC.invert().intValue).toEqual(5);
+          expect(PitchClass.withInt(7).invert().intValue).toEqual(5);
 
-          aPC = PitchClass.withInt(13);
-          expect(aPC.invert().intValue).toEqual(11);
+          expect(PitchClass.withInt(13).invert().intValue).toEqual(11);
+
+          expect(PitchClass.withInt(7).invert().invert().intValue).toEqual(7);
 
         }));
 
@@ -118,32 +118,24 @@
         it('Should return a PitchClassSet as an array',
           inject(function(PitchClassSet){
 
-            var aPCSet = PitchClassSet.withArray([0,1,2,3]);
-
-            expect(aPCSet.arrayValue).toEqual([0,1,2,3]);
+            expect(PitchClassSet.withArray([0,1,2,3]).arrayValue).toEqual([0,1,2,3]);
 
         }));
 
         it('Should return a PitchClassSet cardinal number',
           inject(function(PitchClassSet){
 
-          var aPCSet = PitchClassSet.withArray([0,1,2,3]);
-
-          expect(aPCSet.cardinal).toEqual(4);
+          expect(PitchClassSet.withArray([0,1,2,3]).cardinal).toEqual(4);
 
         }));
-
-
 
         it('Should transpose, invert and normalize a PitchClassSet',
           inject(function(PitchClassSet){
 
-          var aPCSet = PitchClassSet.withArray([0,1,2,3]);
+          expect(PitchClassSet.withArray([0,1,2,3]).transpose(5).arrayValue).toEqual([5,6,7,8]);
+          expect(PitchClassSet.withArray([0,1,2,3]).transpose(5).normalize().arrayValue).toEqual([0,1,2,3]);
 
-          expect(aPCSet.transpose(5).arrayValue).toEqual([5,6,7,8]);
-          expect(aPCSet.transpose(5).normalize().arrayValue).toEqual([0,1,2,3]);
-
-          expect(aPCSet.invert().arrayValue).toEqual([0, 11, 10, 9]);
+          expect(PitchClassSet.withArray([0,1,2,3]).invert().arrayValue).toEqual([0, 11, 10, 9]);
 
           expect(
             PitchClassSet.withArray([2,3,4]).
@@ -164,6 +156,7 @@
 
           var aPCSet = PitchClassSet.withArray([0,1,2,3]);
           expect(aPCSet.normalForm.toString()).toEqual('(0,1,2,3)');
+
           expect(PitchClassSet.withArray([5,2,4,1]).iv.toString()).toEqual('<212100>');
 
         }));
