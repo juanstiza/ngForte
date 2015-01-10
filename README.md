@@ -1,5 +1,7 @@
 # ngForte
 
+Version 0.0.3
+
 ## API
 
 ### Create new PC set
@@ -27,9 +29,3 @@ var pc = PitchClassSet.withArray([0,4,7,8]);
 
     pc.hash.map
     //returns [1,0,0,0,1,0,0,1,1,0,0,0]
-
-
-
-
-
-

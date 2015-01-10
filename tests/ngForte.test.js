@@ -1,133 +1,133 @@
 (function(){
     'use strict';
 
-    describe('ngForte pitchClassCollection',function(){
+    describe('ngForte PitchClassCollection',function(){
 
         beforeEach(module('ngForte'));
 
         it('Should compose a collection string value as prime form',
-          inject(function(pitchClassCollection, pitchClassCollectionTypes){
+          inject(function(PitchClassCollection, PitchClassCollectionTypes){
 
-          var collection = pitchClassCollection.withArrayAndType([0,1,2,3], pitchClassCollectionTypes.primeForm);
+          var collection = PitchClassCollection.withArrayAndType([0,1,2,3], PitchClassCollectionTypes.primeForm);
           expect(collection.toString()).toEqual('(0,1,2,3)');
 
         }));
 
         it('Should compose a collection string value as prime inversion',
-          inject(function(pitchClassCollection, pitchClassCollectionTypes){
+          inject(function(PitchClassCollection, PitchClassCollectionTypes){
 
-          var collection = pitchClassCollection.withArrayAndType([0,1,2,3],
-            pitchClassCollectionTypes.primeInversion);
+          var collection = PitchClassCollection.withArrayAndType([0,1,2,3],
+            PitchClassCollectionTypes.primeInversion);
           expect(collection.toString()).toEqual('[0,1,2,3]');
 
         }));
 
         it('Should compose a collection string value as normal form',
-          inject(function(pitchClassCollection, pitchClassCollectionTypes){
+          inject(function(PitchClassCollection, PitchClassCollectionTypes){
 
-          var collection = pitchClassCollection.withArrayAndType([0,1,2,3],
-            pitchClassCollectionTypes.normalForm);
+          var collection = PitchClassCollection.withArrayAndType([0,1,2,3],
+            PitchClassCollectionTypes.normalForm);
           expect(collection.toString()).toEqual('0,1,2,3');
 
         }));
 
         it('Should compose a collection string value as interval vector',
-          inject(function(pitchClassCollection, pitchClassCollectionTypes){
+          inject(function(PitchClassCollection, PitchClassCollectionTypes){
 
-          var collection = pitchClassCollection.withArrayAndType([1,1,2,2,3,3],
-            pitchClassCollectionTypes.intervalVector);
+          var collection = PitchClassCollection.withArrayAndType([1,1,2,2,3,3],
+            PitchClassCollectionTypes.intervalVector);
           expect(collection.toString()).toEqual('<112233>');
 
         }));
 
         it('Should throw error on malformed interval vector',
-          inject(function(pitchClassCollection, pitchClassCollectionTypes){
+          inject(function(PitchClassCollection, PitchClassCollectionTypes){
 
-          expect(function(pitchClassCollection){
-            pitchClassCollection.withArrayAndType([1,1,2,2,3],
-              pitchClassCollectionTypes.intervalVector);
+          expect(function(PitchClassCollection){
+            PitchClassCollection.withArrayAndType([1,1,2,2,3],
+              PitchClassCollectionTypes.intervalVector);
           }).toThrow();
 
         }));
 
         it('Should throw error on malformed pitch class set',
-          inject(function(pitchClassCollection, pitchClassCollectionTypes){
+          inject(function(PitchClassCollection, PitchClassCollectionTypes){
 
-          expect(function(pitchClassCollection){
-            pitchClassCollection.withArrayAndType([1,2,3,4,5,6,7,8,9,10,11,12],
-              pitchClassCollectionTypes.primeForm);
+          expect(function(PitchClassCollection){
+            PitchClassCollection.withArrayAndType([1,2,3,4,5,6,7,8,9,10,11,12],
+              PitchClassCollectionTypes.primeForm);
           }).toThrow();
 
-          expect(function(pitchClassCollection){
-            pitchClassCollection.withArrayAndType([1,2],
-              pitchClassCollectionTypes.primeForm);
+          expect(function(PitchClassCollection){
+            PitchClassCollection.withArrayAndType([1,2],
+              PitchClassCollectionTypes.primeForm);
           }).toThrow();
 
         }));
 
     });
 
-    describe('ngForte pitchClass', function(){
+    describe('ngForte PitchClass', function(){
 
         beforeEach(module('ngForte'));
 
-        it('Should instantiate pitchClass Class',
-          inject(function(pitchClass, pitchClassCollectionFormats){
+        it('Should instantiate PitchClass Class',
+          inject(function(PitchClass, PitchClassCollectionFormats){
 
-            var aPC = pitchClass.withInt(0);
+            var aPC = PitchClass.withInt(0);
             expect(aPC.intValue).toEqual(0);
 
         }));
 
-        it('Should transpose a pitchClass',
-          inject(function(pitchClass, pitchClassCollectionFormats){
+        it('Should transpose a PitchClass',
+          inject(function(PitchClass, PitchClassCollectionFormats){
 
-          var aPC = pitchClass.withInt(0);
+          var aPC = PitchClass.withInt(0);
           expect(aPC.transpose(1).intValue).toEqual(1);
           expect(aPC.transpose(-1).intValue).toEqual(11);
           expect(aPC.transpose(13).intValue).toEqual(1);
 
         }));
 
-        it('Should represent a pitchClass as string value',
-          inject(function(pitchClass, pitchClassCollectionFormats){
+        it('Should represent a PitchClass as string value',
+          inject(function(PitchClass, PitchClassCollectionFormats){
 
-          var aPC = pitchClass.withInt(0);
-          expect(aPC.stringValue(pitchClassCollectionFormats.numeric)).toEqual('0');
-          expect(aPC.stringValue(pitchClassCollectionFormats.latin)).toEqual('do');
+          var aPC = PitchClass.withInt(0);
+          expect(aPC.stringValue(PitchClassCollectionFormats.numeric)).toEqual('0');
+          expect(aPC.stringValue(PitchClassCollectionFormats.latin)).toEqual('do');
 
         }));
 
-        it('Should invert a pitchClass',
-          inject(function(pitchClass, pitchClassCollectionFormats){
+        it('Should invert a PitchClass',
+          inject(function(PitchClass, PitchClassCollectionFormats){
 
-          var aPC = pitchClass.withInt(7);
+          var aPC = PitchClass.withInt(7);
           expect(aPC.invert().intValue).toEqual(5);
 
-          aPC = pitchClass.withInt(13);
+          aPC = PitchClass.withInt(13);
           expect(aPC.invert().intValue).toEqual(11);
 
         }));
 
     });
 
-    describe('ngForte pitchClassSet', function(){
+    describe('ngForte PitchClassSet', function(){
 
         beforeEach(module('ngForte'));
 
         it('Should return a PitchClassSet as an array',
-          inject(function(pitchClassSet){
+          inject(function(PitchClassSet){
 
-            var aPCSet = pitchClassSet.withArray([0,1,2,3]);
+            var aPCSet = PitchClassSet.withArray([0,1,2,3]);
 
             expect(aPCSet.arrayValue).toEqual([0,1,2,3]);
 
         }));
 
         it('Should return a PitchClassSet cardinal number',
-          inject(function(pitchClassSet){
+          inject(function(PitchClassSet){
 
-          var aPCSet = pitchClassSet.withArray([0,1,2,3]);
+          var aPCSet = PitchClassSet.withArray([0,1,2,3]);
 
           expect(aPCSet.cardinal).toEqual(4);
 
@@ -135,10 +135,10 @@
 
 
 
-        it('Should transpose, invert and normalize a pitchClassSet',
-          inject(function(pitchClassSet){
+        it('Should transpose, invert and normalize a PitchClassSet',
+          inject(function(PitchClassSet){
 
-          var aPCSet = pitchClassSet.withArray([0,1,2,3]);
+          var aPCSet = PitchClassSet.withArray([0,1,2,3]);
 
           expect(aPCSet.transpose(5).arrayValue).toEqual([5,6,7,8]);
           expect(aPCSet.transpose(5).normalize().arrayValue).toEqual([0,1,2,3]);
@@ -146,12 +146,12 @@
           expect(aPCSet.invert().arrayValue).toEqual([0, 11, 10, 9]);
 
           expect(
-            pitchClassSet.withArray([2,3,4]).
+            PitchClassSet.withArray([2,3,4]).
             invert().
             arrayValue
           ).toEqual([10,9,8]);
           expect(
-            pitchClassSet.withArray([2,3,4]).
+            PitchClassSet.withArray([2,3,4]).
             invert().
             transpose(-8).
             arrayValue
@@ -160,17 +160,18 @@
         }));
 
         it('Should return a PitchClassSet as string values',
-          inject(function(pitchClassSet){
+          inject(function(PitchClassSet){
 
-          var aPCSet = pitchClassSet.withArray([0,1,2,3]);
+          var aPCSet = PitchClassSet.withArray([0,1,2,3]);
           expect(aPCSet.normalForm.toString()).toEqual('(0,1,2,3)');
-          expect(pitchClassSet.withArray([5,2,4,1]).iv.toString()).toEqual('<212100>');
+          expect(PitchClassSet.withArray([5,2,4,1]).iv.toString()).toEqual('<212100>');
 
         }));
 
-        it('Should return prime and inverted forms as arrays', inject(function(pitchClassSet){
+        it('Should return prime and inverted forms as arrays',
+          inject(function(PitchClassSet){
 
-          var aPCSet = pitchClassSet.withArray([0,1,7,11]);
+          var aPCSet = PitchClassSet.withArray([0,1,7,11]);
           expect(aPCSet.primeForm.toArray()).toEqual([0,1,2,6]);
           expect(aPCSet.primeInversion.toArray()).toEqual([0,1,2,8]);
 

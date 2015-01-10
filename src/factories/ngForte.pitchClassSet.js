@@ -2,32 +2,32 @@
 
     'use strict';
 
-    angular.module('ngForte.pitchClassSet',[])
-        .factory('pitchClassSet',
-        ['pitchClass',
-            'pitchClassCollectionFormats',
-            'pitchClassCollectionTypes',
-            'pitchClassCollection',
-            'pitchClassSetData',
+    angular.module('ngForte.PitchClassSet',[])
+        .factory('PitchClassSet',
+        ['PitchClass',
+            'PitchClassCollectionFormats',
+            'PitchClassCollectionTypes',
+            'PitchClassCollection',
+            'PitchClassSetData',
             '$filter',
-            function(pitchClass,
-                     pitchClassCollectionFormats,
-                     pitchClassCollectionTypes,
-                     pitchClassCollection,
-                     pitchClassSetData,
+            function(PitchClass,
+                     PitchClassCollectionFormats,
+                     PitchClassCollectionTypes,
+                     PitchClassCollection,
+                     PitchClassSetData,
                      $filter){
 
             function PitchClassSet(anArray, isSet) {
                 this._ = {
                     theSet : [],
-                    pitchClassCollectionFormat: pitchClassCollectionFormats.numeric,
-                    pitchClassCollectionType: pitchClassCollectionTypes.primeForm
+                    PitchClassCollectionFormat: PitchClassCollectionFormats.numeric,
+                    PitchClassCollectionType: PitchClassCollectionTypes.primeForm
                 };
                 if (isSet) {
                     this._.theSet = anArray;
                 } else {
                     angular.forEach(anArray, function(value, index){
-                        this.push(pitchClass.withInt(parseInt(value)));
+                        this.push(PitchClass.withInt(parseInt(value)));
                     }, this._.theSet);
                 }
             }
@@ -41,9 +41,9 @@
                     return theResult;
                 },
                 get normalForm() {
-                    return pitchClassCollection.withArrayTypeAndFormat(this.arrayValue,
-                        this._.pitchClassCollectionType,
-                        this._.pitchClassCollectionFormat);
+                    return PitchClassCollection.withArrayTypeAndFormat(this.arrayValue,
+                        this._.PitchClassCollectionType,
+                        this._.PitchClassCollectionFormat);
                 },
                 get primeForm() {
                     return getPrimeForm(this).primeForm;
@@ -86,7 +86,7 @@
             function getPrimeForm(aPitchClassSet) {
                 var originalHash = getSmallest(aPitchClassSet);
                 var invertedHash = getSmallest(aPitchClassSet.invert());
-                var setData = pitchClassSetData[aPitchClassSet.arrayValue.length];
+                var setData = PitchClassSetData[aPitchClassSet.arrayValue.length];
                 var result = {
                     forteCode: "",
                     primeForm: {},
@@ -96,14 +96,14 @@
                 var primeForm = [];
                 angular.forEach(setData, function(value, index){
                     if (angular.toJson(value) === angular.toJson(originalHash)) {
-                        result.primeForm = pitchClassCollection.withArrayTypeAndFormat(value, pitchClassCollectionTypes.primeForm, pitchClassCollectionFormats.numeric);
+                        result.primeForm = PitchClassCollection.withArrayTypeAndFormat(value, PitchClassCollectionTypes.primeForm, PitchClassCollectionFormats.numeric);
                         result.forteCode = index;
-                        result.primeInversion = pitchClassCollection.withArrayTypeAndFormat(invertedHash, pitchClassCollectionTypes.primeInversion, pitchClassCollectionFormats.numeric);
+                        result.primeInversion = PitchClassCollection.withArrayTypeAndFormat(invertedHash, PitchClassCollectionTypes.primeInversion, PitchClassCollectionFormats.numeric);
                     }
                     if (angular.toJson(value) === angular.toJson(invertedHash)) {
-                        result.primeForm = pitchClassCollection.withArrayTypeAndFormat(value, pitchClassCollectionTypes.primeForm, pitchClassCollectionFormats.numeric);
+                        result.primeForm = PitchClassCollection.withArrayTypeAndFormat(value, PitchClassCollectionTypes.primeForm, PitchClassCollectionFormats.numeric);
                         result.forteCode = index;
-                        result.primeInversion = pitchClassCollection.withArrayTypeAndFormat(originalHash, pitchClassCollectionTypes.primeInversion, pitchClassCollectionFormats.numeric);
+                        result.primeInversion = PitchClassCollection.withArrayTypeAndFormat(originalHash, PitchClassCollectionTypes.primeInversion, PitchClassCollectionFormats.numeric);
                     }
                 });
                 return result;
@@ -198,9 +198,9 @@
                 angular.forEach(countSet, function(value) {
                     this.push(value);
                 }, intervalVector);
-                return pitchClassCollection.withArrayTypeAndFormat(intervalVector,
-                    pitchClassCollectionTypes.intervalVector,
-                    pitchClassCollectionFormats.numeric);
+                return PitchClassCollection.withArrayTypeAndFormat(intervalVector,
+                    PitchClassCollectionTypes.intervalVector,
+                    PitchClassCollectionFormats.numeric);
             }
 
             PitchClassSet.withArray = function(anArray) {

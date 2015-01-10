@@ -3,9 +3,9 @@
 
     angular.module('ngForte',[
         'ngForte.constants',
-        'ngForte.pitchClassCollection',
-        'ngForte.pitchClass',
-        'ngForte.pitchClassSet'
+        'ngForte.PitchClassCollection',
+        'ngForte.PitchClass',
+        'ngForte.PitchClassSet'
     ]);
 
 }());

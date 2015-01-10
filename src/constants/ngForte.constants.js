@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('ngForte.constants',[]).
-        constant('pitchClassCollectionFormats',{
+        constant('PitchClassCollectionFormats',{
             numeric: {
                 0:'0',
                 1:'1',
@@ -60,7 +60,7 @@
                 11:'b'
             }
         }).
-        constant('pitchClassCollectionTypes',{
+        constant('PitchClassCollectionTypes',{
             primeForm: {
                 open: '(',
                 close: ')',
@@ -90,7 +90,7 @@
                 min: 3
             }
         }).
-        constant('pitchClassSetData', {
+        constant('PitchClassSetData', {
             "3": {
                 "3-1": [0, 1, 2],
                 "3-2": [0, 1, 3],

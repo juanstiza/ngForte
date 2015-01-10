@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('ngForte.constants',[]).
-        constant('pitchClassCollectionFormats',{
+        constant('PitchClassCollectionFormats',{
             numeric: {
                 0:'0',
                 1:'1',
@@ -60,7 +60,7 @@
                 11:'b'
             }
         }).
-        constant('pitchClassCollectionTypes',{
+        constant('PitchClassCollectionTypes',{
             primeForm: {
                 open: '(',
                 close: ')',
@@ -90,7 +90,7 @@
                 min: 3
             }
         }).
-        constant('pitchClassSetData', {
+        constant('PitchClassSetData', {
             "3": {
                 "3-1": [0, 1, 2],
                 "3-2": [0, 1, 3],
@@ -313,12 +313,13 @@
             }
         });
 
-}());;(function(){
+}());
+;(function(){
 
     'use strict';
 
-    angular.module('ngForte.pitchClass',[])
-        .factory('pitchClass', function(pitchClassCollectionFormats){
+    angular.module('ngForte.PitchClass',[])
+        .factory('PitchClass', function(PitchClassCollectionFormats){
 
             function PitchClass(anInt) {
                 this._ = {
@@ -347,7 +348,7 @@
             }
 
             PitchClass.withInt = function(anInt) {
-                return new PitchClass(anInt, pitchClassCollectionFormats.numeric);
+                return new PitchClass(anInt, PitchClassCollectionFormats.numeric);
             };
 
             PitchClass.prototype.transpose = function(transposition) {
@@ -381,14 +382,15 @@
 
         });
 
-}());;(function(){
+}());
+;(function(){
 
     'use strict';
 
-    angular.module('ngForte.pitchClassCollection',[])
-        .factory('pitchClassCollection', function(
-            pitchClassCollectionFormats,
-            pitchClassCollectionTypes){
+    angular.module('ngForte.PitchClassCollection',[])
+        .factory('PitchClassCollection', function(
+            PitchClassCollectionFormats,
+            PitchClassCollectionTypes){
 
             /**
              * Construct
@@ -401,7 +403,7 @@
                 var _pitchFormat;
                 if (angular.isDefined(pitchFormat)) {
                     _pitchFormat = pitchFormat;
-                } else _pitchFormat = pitchClassCollectionFormats.numeric;
+                } else _pitchFormat = PitchClassCollectionFormats.numeric;
                 this._ = {
                     arrayValue: anArray,
                     collectionType: PitchClassCollectionType,
@@ -459,36 +461,37 @@
 
         });
 
-}());;(function(){
+}());
+;(function(){
 
     'use strict';
 
-    angular.module('ngForte.pitchClassSet',[])
-        .factory('pitchClassSet',
-        ['pitchClass',
-            'pitchClassCollectionFormats',
-            'pitchClassCollectionTypes',
-            'pitchClassCollection',
-            'pitchClassSetData',
+    angular.module('ngForte.PitchClassSet',[])
+        .factory('PitchClassSet',
+        ['PitchClass',
+            'PitchClassCollectionFormats',
+            'PitchClassCollectionTypes',
+            'PitchClassCollection',
+            'PitchClassSetData',
             '$filter',
-            function(pitchClass,
-                     pitchClassCollectionFormats,
-                     pitchClassCollectionTypes,
-                     pitchClassCollection,
-                     pitchClassSetData,
+            function(PitchClass,
+                     PitchClassCollectionFormats,
+                     PitchClassCollectionTypes,
+                     PitchClassCollection,
+                     PitchClassSetData,
                      $filter){
 
             function PitchClassSet(anArray, isSet) {
                 this._ = {
                     theSet : [],
-                    pitchClassCollectionFormat: pitchClassCollectionFormats.numeric,
-                    pitchClassCollectionType: pitchClassCollectionTypes.primeForm
+                    PitchClassCollectionFormat: PitchClassCollectionFormats.numeric,
+                    PitchClassCollectionType: PitchClassCollectionTypes.primeForm
                 };
                 if (isSet) {
                     this._.theSet = anArray;
                 } else {
                     angular.forEach(anArray, function(value, index){
-                        this.push(pitchClass.withInt(parseInt(value)));
+                        this.push(PitchClass.withInt(parseInt(value)));
                     }, this._.theSet);
                 }
             }
@@ -502,9 +505,9 @@
                     return theResult;
                 },
                 get normalForm() {
-                    return pitchClassCollection.withArrayTypeAndFormat(this.arrayValue,
-                        this._.pitchClassCollectionType,
-                        this._.pitchClassCollectionFormat);
+                    return PitchClassCollection.withArrayTypeAndFormat(this.arrayValue,
+                        this._.PitchClassCollectionType,
+                        this._.PitchClassCollectionFormat);
                 },
                 get primeForm() {
                     return getPrimeForm(this).primeForm;
@@ -547,7 +550,7 @@
             function getPrimeForm(aPitchClassSet) {
                 var originalHash = getSmallest(aPitchClassSet);
                 var invertedHash = getSmallest(aPitchClassSet.invert());
-                var setData = pitchClassSetData[aPitchClassSet.arrayValue.length];
+                var setData = PitchClassSetData[aPitchClassSet.arrayValue.length];
                 var result = {
                     forteCode: "",
                     primeForm: {},
@@ -557,14 +560,14 @@
                 var primeForm = [];
                 angular.forEach(setData, function(value, index){
                     if (angular.toJson(value) === angular.toJson(originalHash)) {
-                        result.primeForm = pitchClassCollection.withArrayTypeAndFormat(value, pitchClassCollectionTypes.primeForm, pitchClassCollectionFormats.numeric);
+                        result.primeForm = PitchClassCollection.withArrayTypeAndFormat(value, PitchClassCollectionTypes.primeForm, PitchClassCollectionFormats.numeric);
                         result.forteCode = index;
-                        result.primeInversion = pitchClassCollection.withArrayTypeAndFormat(invertedHash, pitchClassCollectionTypes.primeInversion, pitchClassCollectionFormats.numeric);
+                        result.primeInversion = PitchClassCollection.withArrayTypeAndFormat(invertedHash, PitchClassCollectionTypes.primeInversion, PitchClassCollectionFormats.numeric);
                     }
                     if (angular.toJson(value) === angular.toJson(invertedHash)) {
-                        result.primeForm = pitchClassCollection.withArrayTypeAndFormat(value, pitchClassCollectionTypes.primeForm, pitchClassCollectionFormats.numeric);
+                        result.primeForm = PitchClassCollection.withArrayTypeAndFormat(value, PitchClassCollectionTypes.primeForm, PitchClassCollectionFormats.numeric);
                         result.forteCode = index;
-                        result.primeInversion = pitchClassCollection.withArrayTypeAndFormat(originalHash, pitchClassCollectionTypes.primeInversion, pitchClassCollectionFormats.numeric);
+                        result.primeInversion = PitchClassCollection.withArrayTypeAndFormat(originalHash, PitchClassCollectionTypes.primeInversion, PitchClassCollectionFormats.numeric);
                     }
                 });
                 return result;
@@ -659,9 +662,9 @@
                 angular.forEach(countSet, function(value) {
                     this.push(value);
                 }, intervalVector);
-                return pitchClassCollection.withArrayTypeAndFormat(intervalVector,
-                    pitchClassCollectionTypes.intervalVector,
-                    pitchClassCollectionFormats.numeric);
+                return PitchClassCollection.withArrayTypeAndFormat(intervalVector,
+                    PitchClassCollectionTypes.intervalVector,
+                    PitchClassCollectionFormats.numeric);
             }
 
             PitchClassSet.withArray = function(anArray) {
@@ -684,14 +687,15 @@
 
         }]);
 
-}());;(function(){
+}());
+;(function(){
     'use strict';
 
     angular.module('ngForte',[
         'ngForte.constants',
-        'ngForte.pitchClassCollection',
-        'ngForte.pitchClass',
-        'ngForte.pitchClassSet'
+        'ngForte.PitchClassCollection',
+        'ngForte.PitchClass',
+        'ngForte.PitchClassSet'
     ]);
 
 }());

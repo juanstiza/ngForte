@@ -2,8 +2,8 @@
 
     'use strict';
 
-    angular.module('ngForte.pitchClass',[])
-        .factory('pitchClass', function(pitchClassCollectionFormats){
+    angular.module('ngForte.PitchClass',[])
+        .factory('PitchClass', function(PitchClassCollectionFormats){
 
             function PitchClass(anInt) {
                 this._ = {
@@ -32,7 +32,7 @@
             }
 
             PitchClass.withInt = function(anInt) {
-                return new PitchClass(anInt, pitchClassCollectionFormats.numeric);
+                return new PitchClass(anInt, PitchClassCollectionFormats.numeric);
             };
 
             PitchClass.prototype.transpose = function(transposition) {

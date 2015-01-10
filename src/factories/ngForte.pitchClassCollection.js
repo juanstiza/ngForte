@@ -2,10 +2,10 @@
 
     'use strict';
 
-    angular.module('ngForte.pitchClassCollection',[])
-        .factory('pitchClassCollection', function(
-            pitchClassCollectionFormats,
-            pitchClassCollectionTypes){
+    angular.module('ngForte.PitchClassCollection',[])
+        .factory('PitchClassCollection', function(
+            PitchClassCollectionFormats,
+            PitchClassCollectionTypes){
 
             /**
              * Construct
@@ -18,7 +18,7 @@
                 var _pitchFormat;
                 if (angular.isDefined(pitchFormat)) {
                     _pitchFormat = pitchFormat;
-                } else _pitchFormat = pitchClassCollectionFormats.numeric;
+                } else _pitchFormat = PitchClassCollectionFormats.numeric;
                 this._ = {
                     arrayValue: anArray,
                     collectionType: PitchClassCollectionType,
